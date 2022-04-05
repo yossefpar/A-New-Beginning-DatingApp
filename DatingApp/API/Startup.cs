@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -18,26 +19,31 @@ namespace API
 {
     public class Startup
     {
+        private readonly IConfiguration _config ; 
+
         public Startup(IConfiguration config)
         {
             _config = config;
         }
 
-        public IConfiguration _config { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-             services.AddDbContext<DataContext>(options =>
-            { // this is a lambda expression - very common if you want to pass expression as a parameter
-                options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
-            });
+            //  services.AddDbContext<DataContext>(options =>
+            // { // this is a lambda expression - very common if you want to pass expression as a parameter
+            //     options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
+            // });
+            services.AddApplicationServices(_config);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
+
+            services.AddCors();
+            services.AddIdentityServices(_config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +59,15 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(policy =>
+            policy
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins("https://localhost:4200")
+            );
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
