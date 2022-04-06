@@ -12,8 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace API.Controllers
 {
-    [Route("api[controller]")]
-    public class UserController : ControllerBase
+    public class UserController : BaseApiController
     {
         private readonly DataContext _context;
 
@@ -22,7 +21,7 @@ namespace API.Controllers
             _context = context;
         }
         [Authorize] 
-        [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
             var users = await _context.Users.ToListAsync();
