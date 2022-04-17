@@ -31,10 +31,6 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //  services.AddDbContext<DataContext>(options =>
-            // { // this is a lambda expression - very common if you want to pass expression as a parameter
-            //     options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
-            // });
             services.AddApplicationServices(_config);
 
             services.AddControllers();
@@ -52,7 +48,6 @@ namespace API
             app.UseMiddleware<ExceptionMiddleware>();
             if (env.IsDevelopment())
             {
-                //app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }

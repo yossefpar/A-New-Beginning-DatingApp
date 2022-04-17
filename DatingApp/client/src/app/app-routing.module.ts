@@ -12,12 +12,18 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 
 const routes: Routes = [
   {
+    path:'',
+    component: HomeComponent,
+    pathMatch: 'full'
+  },
+  {
     path: '',
     runGuardsAndResolvers:'always',
     canActivate: [AuthGuard],
     children: [
      { path: 'members',
-     loadChildren: () => import('./modules/members.module').then(m => m.MembersModule) },
+       loadChildren: () => import('./modules/members.module').then(m => m.MembersModule)
+     },
      {path: 'lists', component: ListsComponent},
      {path: 'messages', component: MessagesComponent }
     ]

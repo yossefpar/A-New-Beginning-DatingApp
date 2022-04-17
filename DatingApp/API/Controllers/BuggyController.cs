@@ -11,11 +11,11 @@ using Microsoft.Extensions.Logging;
 
 namespace API.Controllers
 {
-    public class Buggy : BaseApiController
+    public class BuggyController : BaseApiController
     {
         private readonly DataContext _context;
 
-        public Buggy(DataContext context)
+        public BuggyController(DataContext context)
         {
             _context = context;
         }
