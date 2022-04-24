@@ -11,9 +11,9 @@ import { AccountService } from '../Services/account.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  //loggedIn: boolean = false;
   currentUser$: Observable<User>;
   model: any ={};
+  
   constructor(
     private accountService: AccountService,
     private router: Router,

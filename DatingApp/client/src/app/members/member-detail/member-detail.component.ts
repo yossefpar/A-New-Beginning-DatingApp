@@ -30,7 +30,7 @@ export class MemberDetailComponent implements OnInit {
 
   }
 
-  getImage() {
+  getImages(): NgxGalleryImage[] {
     const imagsUrls = [];
     for (const photo of this.member.photos) {
         imagsUrls.push({
@@ -45,7 +45,7 @@ export class MemberDetailComponent implements OnInit {
     const username = this.route.snapshot.paramMap.get('username') as string;
     this.membersService.getMember(username).subscribe(member=> {
       this.member = member;
-      this.galleryImages = this.getImage();
+      this.galleryImages = this.getImages();
     });
   }
 

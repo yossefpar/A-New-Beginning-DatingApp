@@ -20,16 +20,16 @@
         </li>
     </ul>
 
-    <div class="dropdown" *ngIf="currentUser$ | async as user">
+    <div class="dropdown" *ngIf="currentUser$ | async as user" dropdown>
       <a  class="dropdown-toggle text-light"dropdownToggle>{{user.username | titlecase}}</a>
       <div class="dropdown-menu mt-3" *dropdownMenu>
-        <a  class="dropdown-item">Edit Profile</a>
+        <a  class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
         <div class="dropdown-divider"></div>
         <a (click)="logout()" class="dropdown-item">Logout</a>
       </div>
     </div>
 
-  <form *ngIf="!(currentUser$ | async)" class="form-inline mt-2 mt-md-0" #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
+    <form *ngIf="!(currentUser$ | async)" class="form-inline mt-2 mt-md-0" #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
 
       <input name="username" [(ngModel)]="model.username" class="form-control mr-sm-2" type="text" placeholder="Username">
       <input name="password" [(ngModel)]="model.password" class="form-control mr-sm-2" type="password" placeholder="Password">

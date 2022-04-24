@@ -18,12 +18,12 @@ export class AccountService {
   login(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/login' , model)
     .pipe(
-      map((user: User) => {
+      map((response: User) => {
+        const user = response;
         if(user){
           localStorage.setItem('user',JSON.stringify(user));
           this.currentUserSource$.next(user);
         }
-        return user;
       })
     )
   }
