@@ -38,8 +38,8 @@ export class AccountService {
         }
         return user;
       })
-      )
-    }
+    )
+  }
 
   setCurentUser(user:User){
     this.currentUserSource$.next(user);

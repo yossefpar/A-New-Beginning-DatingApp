@@ -27,8 +27,8 @@ const routes: Routes = [
        loadChildren: () => import('./modules/members.module').then(m => m.MembersModule)
      },
      { path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard] },
-     {path: 'lists', component: ListsComponent},
-     {path: 'messages', component: MessagesComponent }
+     { path: 'lists', component: ListsComponent},
+     { path: 'messages', component: MessagesComponent }
     ]
   },
   {path: 'errors', component: TestErrorsComponent},
