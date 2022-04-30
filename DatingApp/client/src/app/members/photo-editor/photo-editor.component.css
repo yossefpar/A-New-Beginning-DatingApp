@@ -1,0 +1,14 @@
+.my-drop-zone { border: dotted 3px lightgray; }
+.nv-file-over { border: dotted 3px red; }
+.another-file-over-class { border: dotted 3px green; }
+img.img-thumbnail {
+  width: 100px;
+  height: 100px !important;
+  margin-bottom: 2px;
+}
+.nv-file-over {
+  border: dotted 3px red;
+}
+input[type=file] {
+  color: transparent;
+}
