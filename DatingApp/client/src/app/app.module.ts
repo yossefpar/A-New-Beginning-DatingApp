@@ -23,6 +23,7 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { TextInputComponent } from './forms/text-input/text-input.component';
 import { DataInputComponent } from './forms/data-input/data-input.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { DataInputComponent } from './forms/data-input/data-input.component';
     ReactiveFormsModule,
     SharedModule,
     MembersModule,
+    BsDatepickerModule.forRoot(),
   ],
   providers: [
     {
