@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using API.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositorys
 {
@@ -15,19 +17,41 @@ namespace API.Data.Repositorys
         {
            _context = context;
         }
-        public Task<UserLike> GetUserLike(int sourceUserId, int likedUserId)
+        public async Task<UserLike> GetUserLike(int sourceUserId, int likedUserId)
         {
-            throw new NotImplementedException();
+           return await _context.Likes.FindAsync(sourceUserId, likedUserId);
         }
 
-        public Task<IEnumerable<LikeDto>> GetUserLikes(string predicate, int userId)
+        public async Task<IEnumerable<LikeDto>> GetUserLikes(string predicate, int userId)
         {
-            throw new NotImplementedException();
+            IQueryable<AppUser> users;
+            var likes = _context.Likes.AsQueryable();
+            if(predicate == "liked")
+            {
+                likes = likes.Where(l => l.SourceUserId == userId);
+                users = likes.Select(l => l.LikedUser);
+            }
+            else
+            {
+                likes = likes.Where(like => like.LikedUserId == userId); //filter
+                users = likes.Select(like => like.SourceUser);
+            }
+            return await users.Select(user => new LikeDto
+            {
+                Username = user.UserName,
+                KnownAs = user.KnownAs,
+                Age = user.DateOfBirth.CalculateAge(),
+                PhotoUrl = user.Photos.FirstOrDefault(p => p.IsMain).Url,
+                City = user.City,
+                Id = user.Id
+            }).ToListAsync();
         }
 
-        public Task<AppUser> GetUserWithLikes(int userId)
+        public async Task<AppUser> GetUserWithLikes(int userId)
         {
-            throw new NotImplementedException();
+            return await _context.Users
+            .Include(u => u.LikedUsers)
+            .FirstOrDefaultAsync(u => u.Id == userId);
         }
     }
 }
