@@ -24,6 +24,8 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
 import { TextInputComponent } from './forms/text-input/text-input.component';
 import { DataInputComponent } from './forms/data-input/data-input.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 
 @NgModule({
@@ -52,6 +54,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     SharedModule,
     MembersModule,
     BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
+    ButtonsModule.forRoot(),
   ],
   providers: [
     {

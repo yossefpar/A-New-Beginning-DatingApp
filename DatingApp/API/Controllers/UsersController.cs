@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using API.Extensions;
+using API.Helpers;
 
 namespace API.Controllers
 {
@@ -32,10 +33,23 @@ namespace API.Controllers
             _photoService = photoService;
         }
         [HttpGet] 
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {
-            var users = await _userRepository.GetMembersAsync();
-            return Ok(users);
+            var user = await _userRepository.GetUserByUserNameAsync(User.GetUsername());
+            if(string.IsNullOrEmpty(userParams.Gender))
+            {
+                userParams.Gender = user.Gender == "male" ? "female" : "male";
+            }
+            userParams.CurrnetUsername = user.UserName;
+            
+            var users = await _userRepository.GetMembersAsync(userParams);
+            Response.AddPaginationHeader(
+            users.CurrentPage,
+            users.PageSize,
+            users.TotalCount,
+            users.TotalPages);
+
+            return Ok(users); //dibag bifore
         }
 
         [HttpGet("{username}", Name = "GetUser"),]
