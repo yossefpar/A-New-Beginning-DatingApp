@@ -52,7 +52,6 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    MembersModule,
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
     ButtonsModule.forRoot(),

@@ -62,10 +62,6 @@ memberCache = new Map<string , PaginatedResult<Member[]>>();
   }
 
   getMember(username: string){
-    // const member = this.members.find(m => m.username == usernwme);
-    // if(member !== undefined) {
-    //   return of(member);
-    // }
     const member = [...this.memberCache.values()];
     const allUsers = member.reduce((arr, elem) => arr.concat(elem.result), [] as Member[]);
     const foundMember = allUsers.find(m => m.username === username);
@@ -80,6 +76,17 @@ memberCache = new Map<string , PaginatedResult<Member[]>>();
         this.members[index] = member;
       })
     )
+  }
+
+  addLike(username: string) {
+    const url = `${this.baseUrl}likes/${username}`;
+    return this.http.post(url , {});
+  }
+
+  getLikes(predicate: string, pageNumber: number, pageSize: number) {
+    let params = this.getPaginationHeaders(pageNumber ,pageSize );
+    params = params.append('predicate', predicate)
+    return this.getPaginatedResult<Partial<Member>[]>(`${this.baseUrl}likes`, params);
   }
 
   setMainPhoto(photoId: number) {

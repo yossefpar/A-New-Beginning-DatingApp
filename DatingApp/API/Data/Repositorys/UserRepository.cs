@@ -52,7 +52,7 @@ namespace API.Data.Repositorys
             return await PagedList<MemberDto>.CreateAsync(
                 query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking(),
                  userParams.PageNumber,
-                  userParams.PageSize);
+                 userParams.PageSize);
         
         }
 

@@ -1,3 +1,4 @@
+import { MemberCardComponent } from './../members/member-card/member-card.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ToastrModule } from 'ngx-toastr';
 import { NgModule } from '@angular/core';
@@ -11,13 +12,17 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { FormsModule } from '@angular/forms';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TimeagoModule } from 'ngx-timeago';
+import { RouterModule } from '@angular/router';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    MemberCardComponent
+  ],
   imports: [
     CommonModule,
+    RouterModule,
     BsDropdownModule.forRoot(),
     ToastrModule.forRoot({
       positionClass:'toast-bottom-right'
@@ -32,6 +37,7 @@ import { TimeagoModule } from 'ngx-timeago';
     TimeagoModule.forRoot()
   ],
   exports:[
+    MemberCardComponent,
     BsDropdownModule,
     BsDatepickerModule,
     ToastrModule,

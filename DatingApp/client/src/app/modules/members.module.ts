@@ -15,7 +15,6 @@ const routes: Routes = [
   declarations: [
     MemberListComponent,
     MemberDetailComponent,
-    MemberCardComponent
   ],
   imports: [
     SharedModule,
