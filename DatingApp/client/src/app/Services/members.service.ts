@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { UserParams } from '../models/UserParams';
 import { User } from '../models/user';
 import { AccountService } from './account.service';
+import { getPaginatedResult, getPaginationHeaders } from './PaginationHelper';
 
 
 @Injectable({
@@ -48,13 +49,13 @@ memberCache = new Map<string , PaginatedResult<Member[]>>();
     const response = this.memberCache.get(cacheKey);
     if(response) return of(response);
 
-    let params = this.getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
+    let params = getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
     params = params.append('minAge', userParams.minAge.toString());
     params = params.append('maxAge', userParams.maxAge.toString());
     params = params.append('gender', userParams.gender);
     params = params.append('orderBy', userParams.orderBy);
 
-    return this.getPaginatedResult<Member[]>(`${this.baseUrl}users`,params)
+    return getPaginatedResult<Member[]>(`${this.baseUrl}users`, params, this.http)
     .pipe(
       tap(res => this.memberCache.set(cacheKey , res))
     )
@@ -84,9 +85,9 @@ memberCache = new Map<string , PaginatedResult<Member[]>>();
   }
 
   getLikes(predicate: string, pageNumber: number, pageSize: number) {
-    let params = this.getPaginationHeaders(pageNumber ,pageSize );
+    let params = getPaginationHeaders(pageNumber ,pageSize );
     params = params.append('predicate', predicate)
-    return this.getPaginatedResult<Partial<Member>[]>(`${this.baseUrl}likes`, params);
+    return getPaginatedResult<Partial<Member>[]>(`${this.baseUrl}likes`, params, this.http);
   }
 
   setMainPhoto(photoId: number) {
