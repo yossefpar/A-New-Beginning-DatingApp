@@ -13,7 +13,7 @@ import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
   styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit {
-  @ViewChild('memberTabs') memberTabs: TabsetComponent;
+  @ViewChild('memberTabs', {static: true}) memberTabs: TabsetComponent;
   messages: Message[] = [];
   member: Member;
   galleryOptions: NgxGalleryOptions[]
@@ -27,7 +27,12 @@ export class MemberDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadMember();
+    this.route.data.subscribe(data => {
+      this.member = data['member'];
+    });
+    this.route.queryParams.subscribe(params => {
+      params.tab ? this.selectTab(params.tab) : this.selectTab(0);
+    });
     this.galleryOptions = [{
       width: '500px',
       height: '500px',
@@ -36,6 +41,8 @@ export class MemberDetailComponent implements OnInit {
       imageAnimation: NgxGalleryAnimation.Slide,
       preview: false,
     }];
+
+    this.galleryImages = this.getImages();
 
   }
 
@@ -51,12 +58,16 @@ export class MemberDetailComponent implements OnInit {
     return imagsUrls;
   }
 
-  loadMember() {
-    const username = this.route.snapshot.paramMap.get('username') as string;
-    this.membersService.getMember(username).subscribe(member=> {
-      this.member = member;
-      this.galleryImages = this.getImages();
-    });
+  // loadMember() {
+  //   const username = this.route.snapshot.paramMap.get('username') as string;
+  //   this.membersService.getMember(username).subscribe(member=> {
+  //     this.member = member;
+  //     this.galleryImages = this.getImages();
+  //   });
+  // }
+
+  selectTab(tabId: number) {
+    this.memberTabs.tabs[tabId].active = true;
   }
 
   onTabActivated(data: TabDirective) {

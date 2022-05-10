@@ -13,7 +13,7 @@ import { AccountService } from '../Services/account.service';
 export class NavComponent implements OnInit {
   currentUser$: Observable<User>;
   model: any ={};
-  
+
   constructor(
     private accountService: AccountService,
     private router: Router,
@@ -36,5 +36,14 @@ export class NavComponent implements OnInit {
     this.accountService.logout();
     this.router.navigateByUrl('/');
   }
+   test() {
+    JSON.parse('./test.js');
+
+   }
+
 
 }
+
+
+
+

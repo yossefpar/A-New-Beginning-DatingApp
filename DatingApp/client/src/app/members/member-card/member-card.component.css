@@ -23,7 +23,6 @@
   margin-left: auto;
   opacity: 0;
 }
-/* so initially we wont see nothing, but on hover we will */
 .card-img-wrapper:hover .member-icons {
   bottom: 0px;
   opacity: 1;
